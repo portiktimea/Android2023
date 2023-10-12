@@ -16,7 +16,7 @@ fun main(args: Array<String>) {
         if( word.equals("quit")){
             break
         }
-        println("Result: ${word?.let { dict.find(it) }}")
+        println("Result: ${word?.let { dict.find(it) }}")    //?
     }
 
 

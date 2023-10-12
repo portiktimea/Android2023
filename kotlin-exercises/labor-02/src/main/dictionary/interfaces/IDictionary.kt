@@ -2,7 +2,7 @@ package main.dictionary.interfaces
 
 interface IDictionary {
 
-    companion object{
+    companion object{   //?
         const val DICTIONARY_FILE = "dictionary.txt"
     }
     fun add(word: String) : Boolean
