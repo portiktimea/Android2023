@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">RecipesApp</string>
+    <string name="namePlaceholder">Type here your name</string>
+    <string name="StartButton">Start</string>
 </resources>

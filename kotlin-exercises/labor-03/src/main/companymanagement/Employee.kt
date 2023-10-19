@@ -9,7 +9,7 @@ open class Employee(val name: String, private var salary: Double){
     }
 
     fun setSalary(newSalary: Double){
-        salary += newSalary
+        salary = newSalary
     }
 
     open fun displayInfo(){
