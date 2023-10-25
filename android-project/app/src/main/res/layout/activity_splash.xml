@@ -7,22 +7,19 @@
         android:layout_height="match_parent"
         tools:context=".SplashActivity">
 
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:text="@string/namePlaceholder"
-            android:ems="10"
-            android:id="@+id/NameInput"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="24dp"
-            app:layout_constraintVertical_bias="0.32999998" android:textSize="20dp"/>
-    <Button
-            android:text="@string/StartButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/StartButton"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/NameInput" app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.07999998"/>
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/splashbackground"
+                android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/SplashScreenImage"
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:src="@drawable/splashlogo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

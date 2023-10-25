@@ -3,7 +3,11 @@ package com.tasty.recipesapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.view.WindowManager
+import androidx.core.content.ContextCompat
 import com.tasty.recipesapp.databinding.ActivitySplashBinding
 
 class SplashActivity : AppCompatActivity() {
@@ -13,20 +17,18 @@ class SplashActivity : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_splash)
+        setContentView(R.layout.activity_splash)
 
-        val binding = ActivitySplashBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+        )
 
-        //binding.nameInput
-        binding.StartButton.setOnClickListener{
+        Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("message", "Hello from Splash")
             startActivity(intent)
-        }
-
-        Log.d(TAG, "onCreate: SplashActivity created.")
-
+            finish()
+        }, 3000)
     }
 
     override fun onStart() {
