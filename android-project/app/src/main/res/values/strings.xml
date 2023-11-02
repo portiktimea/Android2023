@@ -2,4 +2,6 @@
     <string name="app_name">RecipesApp</string>
     <string name="namePlaceholder">Type here your name</string>
     <string name="StartButton">Start</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
