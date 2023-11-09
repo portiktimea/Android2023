@@ -1,11 +1,8 @@
-package com.tasty.recipesapp.data.dto
+package com.tasty.recipesapp.data.models
 
-import com.google.gson.annotations.SerializedName
-
-data class NutritionDTO(
+data class NutritionModel(
     val carbohydrates: Int,
     val fiber: Int,
-    @SerializedName("updated_at")
     val updatedAt: String,
     val protein: Int,
     val fat: Int,

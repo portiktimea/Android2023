@@ -1,10 +1,15 @@
 package com.tasty.recipesapp.data.dto
 
+import com.google.gson.annotations.SerializedName
 data class IngredientDTO(
     val id: Int,
-    val display_singular: String,
-    val updated_at: Long,
+    @SerializedName("display_singular")
+    val displaySingular: String,
+    @SerializedName("updated_at")
+    val updatedAt: Long,
     val name: String,
-    val created_at: Long,
-    val display_plural: String
+    @SerializedName("created_at")
+    val createdAt: Long,
+    @SerializedName("display_plural")
+    val displayPlural: String
 )

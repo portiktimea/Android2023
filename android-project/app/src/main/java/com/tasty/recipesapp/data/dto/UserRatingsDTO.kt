@@ -1,7 +1,10 @@
 package com.tasty.recipesapp.data.dto
 
+import com.google.gson.annotations.SerializedName
 data class UserRatingsDTO(
-    val count_positive: Int,
+    @SerializedName("count_positive")
+    val countPositive: Int,
     val score: Double,
-    val count_negative: Int
+    @SerializedName("count_negative")
+    val countNegative: Int
 )

@@ -1,10 +1,9 @@
 package com.tasty.recipesapp.data.models
 
-data class IngredientModel(
-    val id: Int,
+data class UnitModel(
     val displaySingular: String,
-    val updatedAt: Long,
+    val abbreviation: String,
+    val system: String,
     val name: String,
-    val createdAt: Long,
     val displayPlural: String
 )
