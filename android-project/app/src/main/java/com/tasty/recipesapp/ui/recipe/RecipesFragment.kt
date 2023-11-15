@@ -28,6 +28,20 @@ class RecipesFragment : Fragment() {
                 Log.d("Instructions", instructionModel.toString())
             }
         }
+//
+//        recipeViewModel.loadTagData(requireContext())
+//        recipeViewModel.tagModels.observe(viewLifecycleOwner) {  tags ->
+//            for (tagModel in tags) {
+//                Log.d("Tags", tagModel.toString())
+//            }
+//        }
+
+        recipeViewModel.loadRecipeData(requireContext())
+        recipeViewModel.recipeModels.observe(viewLifecycleOwner) {  recipes ->
+            for (recipeModel in recipes) {
+                Log.d("Recipes", recipeModel.toString())
+            }
+        }
     }
 
     override fun onCreateView(

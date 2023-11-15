@@ -1,20 +1,15 @@
-package com.tasty.recipesapp
+package com.tasty.recipesapp.activities
 
-import androidx.appcompat.app.AppCompatActivity
+import android.R
+import android.os.Build
 import android.os.Bundle
-import android.view.Window
+import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.tasty.recipesapp.databinding.ActivityMainBinding
-import com.tasty.recipesapp.ui.home.HomeFragment
-import com.tasty.recipesapp.ui.profile.ProfileFragment
-import com.tasty.recipesapp.ui.recipe.RecipesFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class MainActivity : AppCompatActivity() {
@@ -23,13 +18,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(com.tasty.recipesapp.R.layout.activity_main)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(com.tasty.recipesapp.R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        val bottomNavigationView = findViewById<BottomNavigationView>(com.tasty.recipesapp.R.id.bottomNavigationView)
         setupWithNavController(bottomNavigationView, navController)
+
+        val window = window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.darker_gray)
 
     }
 

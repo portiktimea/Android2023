@@ -6,30 +6,19 @@ import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.tasty.recipesapp.data.models.InstructionTime
+import com.tasty.recipesapp.utils.Mapping.toInstructionModelList
 import org.json.JSONObject
 import java.io.IOException
 
-class InstructionsRepository : IGenericRepository<InstructionDTO, InstructionModel> {
-    override fun InstructionDTO.toModel(): InstructionModel {
-        return InstructionModel(
-            id = this.id,
-            displayText = this.displayText,
-            time = InstructionTime(this.startTime, this.endTime)
-        )
-    }
-
-    override fun List<InstructionDTO>.toModelList(): List<InstructionModel> {
-        return this.map { it.toModel() }
-    }
+class InstructionsRepository : IGenericRepository<InstructionModel> {
 
     // later, context should be removed
     override fun getAll(context: Context): List<InstructionModel> {
-        return readAll(context).toModelList()
+        return readAll(context).toInstructionModelList()
     }
 
     // In the future this should be deleted and data should be fetched from a public API
-    override fun readAll(context : Context): List<InstructionDTO> {
+    private fun readAll(context : Context): List<InstructionDTO> {
         val gson = Gson()
         var instructionList = listOf<InstructionDTO>()
         val assetManager = context.assets
