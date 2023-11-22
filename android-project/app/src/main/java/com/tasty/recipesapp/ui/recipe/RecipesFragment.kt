@@ -17,44 +17,33 @@ import com.tasty.recipesapp.data.models.RecipeModel
 
 class RecipesFragment : Fragment() {
 
-    private val recipeViewModel : RecipeListViewModel by viewModels()
+    private val recipeViewModel: RecipeListViewModel by viewModels()
     private lateinit var recipeAdapter: RecipeAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //requireActivity().title = "Recipes"
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.setHasFixedSize(true)
 
-        recipeAdapter = RecipeAdapter(emptyList(),
-            onItemClick = { recipe -> navigateToRecipeDetail(recipe) },
-            onDetailsClick = { recipe -> navigateToRecipeDetail(recipe) }
-        )
+        recipeAdapter = RecipeAdapter(emptyList())
+
         recyclerView.adapter = recipeAdapter
 
         recipeViewModel.loadRecipeData(requireContext())
-        recipeViewModel.recipeModels.observe(viewLifecycleOwner) {  recipes ->
+        recipeViewModel.recipeModels.observe(viewLifecycleOwner) { recipes ->
             for (recipeModel in recipes) {
                 Log.d("Recipes", recipeModel.toString())
             }
             recipeAdapter.recipes = recipes
-            recipeAdapter.notifyDataSetChanged()
         }
-    }
-
-    private fun navigateToRecipeDetail(recipe: RecipeModel) {
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_recipes, container, false)
     }
 }
