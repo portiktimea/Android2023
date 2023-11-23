@@ -6,11 +6,30 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.tasty.recipesapp.data.dto.RecipeDTO
 import com.tasty.recipesapp.data.models.RecipeModel
+import com.tasty.recipesapp.database.RecipeDao
+import com.tasty.recipesapp.database.RecipeEntity
+import com.tasty.recipesapp.utils.Mapping.toModel
 import com.tasty.recipesapp.utils.Mapping.toRecipeModelList
 import org.json.JSONObject
 import java.io.IOException
 
-class RecipesRepository : IGenericRepository<RecipeModel> {
+class RecipesRepository(private val recipeDao: RecipeDao) : IGenericRepository<RecipeModel> {
+    suspend fun insertRecipe(recipe: RecipeEntity) {
+        recipeDao.insertRecipe(recipe)
+    }
+
+    suspend fun deleteRecipe(recipe: RecipeEntity) {
+        recipeDao.deleteRecipe(recipe)
+    }
+
+    suspend fun getAllRecipes(): List<RecipeModel> {
+        return recipeDao.getAllRecipes().map {
+            val jsonObject = JSONObject(it.json)
+            jsonObject.apply { put("id", it.internalId) }
+            val gson = Gson()
+            gson.fromJson(jsonObject.toString(), RecipeDTO::class.java).toModel()
+        }
+    }
 
     override fun getAll(context: Context): List<RecipeModel> {
         return readAll(context).toRecipeModelList()

@@ -35,7 +35,7 @@ class RecipeListViewModel : ViewModel() {
 //    }
 
     fun loadRecipeData(context: Context) {
-        val data = RepositoryProvider.recipesRepository.getAll(context)
+        val data = RepositoryProvider.recipeRepository.getAll(context)
         _recipeModels.value = data
     }
 }

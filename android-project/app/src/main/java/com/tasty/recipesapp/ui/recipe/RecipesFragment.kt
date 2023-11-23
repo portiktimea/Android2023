@@ -18,7 +18,7 @@ import com.tasty.recipesapp.data.models.RecipeModel
 class RecipesFragment : Fragment() {
 
     private val recipeViewModel: RecipeListViewModel by viewModels()
-    private lateinit var recipeAdapter: RecipeAdapter
+    private var recipeAdapter: RecipeAdapter = RecipeAdapter(emptyList())
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -26,8 +26,6 @@ class RecipesFragment : Fragment() {
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.setHasFixedSize(true)
-
-        recipeAdapter = RecipeAdapter(emptyList())
 
         recyclerView.adapter = recipeAdapter
 
@@ -46,4 +44,8 @@ class RecipesFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_recipes, container, false)
     }
+
+//    override fun onItemClick(id: Int){
+//
+//    }
 }

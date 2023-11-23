@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.tasty.recipesapp.R
+import com.tasty.recipesapp.providers.RepositoryProvider
 
 /**
  * A simple [Fragment] subclass.
@@ -13,6 +14,8 @@ import com.tasty.recipesapp.R
  * create an instance of this fragment.
  */
 class ProfileFragment : Fragment() {
+
+    val profileViewModel = ProfileViewModel(RepositoryProvider.recipeRepository)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
