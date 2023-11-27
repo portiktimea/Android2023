@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="recipeTitle" type="id">Title</item>
-    <item name="recipeVideoURL" type="id">recipeVideo</item>
-    <item name="recipeVideoURL" type="id">recipeVideo</item>
+
 </resources>
