@@ -17,7 +17,8 @@ import java.net.URL
 import java.util.concurrent.Executors
 
 class NewRecipeAdapter(
-    var recipes: List<NewRecipeModel>
+    var recipes: List<NewRecipeModel>,
+    private val onRecipeLongClicked: (NewRecipeModel) -> Unit
 ) : RecyclerView.Adapter<NewRecipeAdapter.NewRecipeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewRecipeViewHolder {
@@ -53,6 +54,11 @@ class NewRecipeAdapter(
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+        }
+
+        holder.itemView.setOnLongClickListener{
+            onRecipeLongClicked.invoke(recipe)
+            true
         }
     }
 

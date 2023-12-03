@@ -35,6 +35,7 @@ class ProfileViewModel() : ViewModel(){
     fun removeRecipe(recipe: RecipeEntity) {
         viewModelScope.launch {
             RepositoryProvider.recipeRepository.deleteRecipe(recipe)
+            _allRecipes.value = RepositoryProvider.recipeRepository.getAllRecipes()
         }
     }
 }

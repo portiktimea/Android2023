@@ -176,6 +176,7 @@ object Mapping {
 
     fun NewRecipeDTO.toModel(): NewRecipeModel {
         return NewRecipeModel(
+            id = this.id,
             videoUrl = this.videoUrl,
             title = this.title,
             instructions = this.instructions,

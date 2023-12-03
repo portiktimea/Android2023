@@ -17,6 +17,8 @@ import androidx.lifecycle.lifecycleScope
 import com.google.gson.Gson
 import com.tasty.recipesapp.data.dto.NewRecipeDTO
 import kotlinx.coroutines.launch
+import org.json.JSONArray
+import org.json.JSONObject
 
 class NewRecipeFragment : Fragment(){
 
@@ -71,16 +73,22 @@ class NewRecipeFragment : Fragment(){
         val videoURL = binding.recipeVideoURL.text.toString()
 
         val ingredients = mutableListOf<String>()
-        ingredients.add(binding.firstIngredient.text.toString())
-        ingredients.add(binding.secondIngredient.text.toString())
-        ingredients.add(binding.thirdIngredient.text.toString())
+        for (i in 0 until binding.linearLayout2.childCount) {
+            val editText = binding.linearLayout2.getChildAt(i) as? EditText
+            editText?.let {
+                ingredients.add(it.text.toString())
+            }
+        }
 
         val instructions = mutableListOf<String>()
-        instructions.add(binding.firstInstruction.text.toString())
-        instructions.add(binding.secondInstruction.text.toString())
-        instructions.add(binding.thirdInstruction.text.toString())
+        for (i in 0 until binding.linearLayout3.childCount) {
+            val editText = binding.linearLayout3.getChildAt(i) as? EditText
+            editText?.let {
+                instructions.add(it.text.toString())
+            }
+        }
 
-        val recipe = NewRecipeDTO(title, description, pictureURL, videoURL, ingredients, instructions)
+        val recipe = createJsonFromInputs(title, description, pictureURL, videoURL, ingredients, instructions)
         val gson = Gson()
         val recipeEntity = RecipeEntity(
             json = gson.toJson(recipe)
@@ -91,17 +99,17 @@ class NewRecipeFragment : Fragment(){
         }
     }
 
-//    private fun createJsonFromInputs(title: String, description: String, pictureUrl: String, videoUrl: String, ingredients: List<String>, instructions: List<String>): String {
-//        val jsonObject = JSONObject()
-//        jsonObject.put("title", title)
-//        jsonObject.put("description", description)
-//        jsonObject.put("pictureUrl", pictureUrl)
-//        jsonObject.put("videoUrl", videoUrl)
-//        jsonObject.put("ingredients", JSONArray(ingredients))
-//        jsonObject.put("instructions", JSONArray(instructions))
-//
-//        return jsonObject.toString()
-//    }
+    private fun createJsonFromInputs(title: String, description: String, pictureUrl: String, videoUrl: String, ingredients: List<String>, instructions: List<String>): String {
+        val jsonObject = JSONObject()
+        jsonObject.put("title", title)
+        jsonObject.put("description", description)
+        jsonObject.put("pictureUrl", pictureUrl)
+        jsonObject.put("videoUrl", videoUrl)
+        jsonObject.put("ingredients", JSONArray(ingredients))
+        jsonObject.put("instructions", JSONArray(instructions))
+
+        return jsonObject.toString()
+    }
 
     private fun addNewEditText(linearLayout: LinearLayout, hint: String) {
         val editText = EditText(context)
