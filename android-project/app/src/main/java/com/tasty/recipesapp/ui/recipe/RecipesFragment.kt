@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tasty.recipesapp.R
+import com.tasty.recipesapp.adapters.NewRecipeAdapter
 import com.tasty.recipesapp.adapters.RecipeAdapter
 import com.tasty.recipesapp.data.models.RecipeModel
 

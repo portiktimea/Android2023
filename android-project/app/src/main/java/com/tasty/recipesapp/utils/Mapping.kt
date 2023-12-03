@@ -1,5 +1,6 @@
 package com.tasty.recipesapp.utils
 import com.tasty.recipesapp.data.dto.*
+import com.tasty.recipesapp.data.dto.NewRecipeDTO
 import com.tasty.recipesapp.data.models.*
 
 object Mapping {
@@ -170,6 +171,21 @@ object Mapping {
     }
 
     fun List<RecipeDTO>.toRecipeModelList(): List<RecipeModel> {
+        return this.map { it.toModel() }
+    }
+
+    fun NewRecipeDTO.toModel(): NewRecipeModel {
+        return NewRecipeModel(
+            videoUrl = this.videoUrl,
+            title = this.title,
+            instructions = this.instructions,
+            description = this.description,
+            pictureUrl = this.pictureUrl,
+            ingredients = this.ingredients
+        )
+    }
+
+    fun List<NewRecipeDTO>.toNewRecipeModelList(): List<NewRecipeModel> {
         return this.map { it.toModel() }
     }
 

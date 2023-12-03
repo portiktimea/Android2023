@@ -24,10 +24,10 @@ class RecipeListViewModel : ViewModel() {
 //
 //     Function to load data from the repository
 //     Context should be removed
-    fun loadInstructionData(context: Context) {
-        val data = RepositoryProvider.instructionsRepository.getAll(context)
-        _instructionModels.value = data
-    }
+//    fun loadInstructionData(context: Context) {
+//        val data = RepositoryProvider.instructionsRepository.getAll(context)
+//        _instructionModels.value = data
+//    }
 
 //    fun loadTagData(context: Context) {
 //        val data = RepositoryProvider.tagsRepository.getAll(context)
@@ -35,6 +35,7 @@ class RecipeListViewModel : ViewModel() {
 //    }
 
     fun loadRecipeData(context: Context) {
+        RepositoryProvider.initialize(context)
         val data = RepositoryProvider.recipeRepository.getAll(context)
         _recipeModels.value = data
     }

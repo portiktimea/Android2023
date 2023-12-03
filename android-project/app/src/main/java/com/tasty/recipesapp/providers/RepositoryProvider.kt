@@ -5,7 +5,7 @@ import com.tasty.recipesapp.database.RecipeDao
 import com.tasty.recipesapp.database.RecipeDatabase
 import com.tasty.recipesapp.repository.InstructionsRepository
 import com.tasty.recipesapp.repository.RecipesRepository
-import com.tasty.recipesapp.repository.TagsRepository
+import kotlinx.coroutines.CoroutineScope
 
 object RepositoryProvider {
 

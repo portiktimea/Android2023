@@ -11,22 +11,24 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.tasty.recipesapp.R
-import com.tasty.recipesapp.data.models.RecipeModel
+import com.tasty.recipesapp.data.models.NewRecipeModel
+import java.net.HttpURLConnection
+import java.net.URL
 import java.util.concurrent.Executors
 
-class RecipeAdapter(
-    var recipes: List<RecipeModel>
-) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
+class NewRecipeAdapter(
+    var recipes: List<NewRecipeModel>
+) : RecyclerView.Adapter<NewRecipeAdapter.NewRecipeViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewRecipeViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.recipe_item, parent, false)
-        return RecipeViewHolder(view)
+        return NewRecipeViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: NewRecipeViewHolder, position: Int) {
         val recipe = recipes[position]
-        holder.textView.text = recipe.name
+        holder.textView.text = recipe.title
 
         val executor = Executors.newSingleThreadExecutor()
 
@@ -35,18 +37,20 @@ class RecipeAdapter(
         var image: Bitmap? = null
         executor.execute {
 
-            val imageURL = recipe.thumbnailUrl
+            val imageURL = recipe.pictureUrl
 
             try {
-                val `in` = java.net.URL(imageURL).openStream()
-                image = BitmapFactory.decodeStream(`in`)
+                val url = URL(imageURL)
+                val connection = url.openConnection() as HttpURLConnection
+                connection.doInput = true
+                connection.connect()
+                val input = connection.inputStream
+                val bitmap = BitmapFactory.decodeStream(input)
 
                 handler.post {
-                    holder.imageView.setImageBitmap(image)
+                    holder.imageView.setImageBitmap(bitmap)
                 }
-            }
-
-            catch (e: Exception) {
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
@@ -56,15 +60,14 @@ class RecipeAdapter(
         return recipes.size
     }
 
-    fun updateData(newData: List<RecipeModel>) {
+    fun updateData(newData: List<NewRecipeModel>) {
         recipes = newData
         notifyDataSetChanged()
     }
 
-    class RecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class NewRecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView : TextView = itemView.findViewById(R.id.textView)
         val imageView : ImageView = itemView.findViewById(R.id.imageView)
     }
 
 }
-

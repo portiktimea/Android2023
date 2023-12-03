@@ -4,7 +4,9 @@ import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.tasty.recipesapp.data.dto.NewRecipeDTO
 import com.tasty.recipesapp.data.dto.RecipeDTO
+import com.tasty.recipesapp.data.models.NewRecipeModel
 import com.tasty.recipesapp.data.models.RecipeModel
 import com.tasty.recipesapp.database.RecipeDao
 import com.tasty.recipesapp.database.RecipeEntity
@@ -22,12 +24,12 @@ class RecipesRepository(private val recipeDao: RecipeDao) : IGenericRepository<R
         recipeDao.deleteRecipe(recipe)
     }
 
-    suspend fun getAllRecipes(): List<RecipeModel> {
+    suspend fun getAllRecipes(): List<NewRecipeModel> {
         return recipeDao.getAllRecipes().map {
             val jsonObject = JSONObject(it.json)
             jsonObject.apply { put("id", it.internalId) }
             val gson = Gson()
-            gson.fromJson(jsonObject.toString(), RecipeDTO::class.java).toModel()
+            gson.fromJson(jsonObject.toString(), NewRecipeDTO::class.java).toModel()
         }
     }
 

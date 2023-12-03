@@ -1,25 +1,40 @@
 package com.tasty.recipesapp.ui.profile
 
+import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tasty.recipesapp.data.models.NewRecipeModel
+import com.tasty.recipesapp.data.models.RecipeModel
 import com.tasty.recipesapp.database.RecipeEntity
-import com.tasty.recipesapp.providers.RepositoryProvider.recipeRepository
+import com.tasty.recipesapp.providers.RepositoryProvider
 import com.tasty.recipesapp.repository.RecipesRepository
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-class ProfileViewModel(private val recipeRepository: RecipesRepository) : ViewModel(){
+class ProfileViewModel() : ViewModel(){
 
-    suspend fun getAllRecipes() = recipeRepository.getAllRecipes()
+    private val _allRecipes = MutableLiveData<List<NewRecipeModel>>()
+    val allRecipes: LiveData<List<NewRecipeModel>>
+        get() = _allRecipes
+    suspend fun getAllRecipes(context: Context){
+        viewModelScope.launch {
+            RepositoryProvider.initialize(context)
+            val recipes = RepositoryProvider.recipeRepository.getAllRecipes()
+            _allRecipes.value = recipes
+        }
+    }
 
     fun insertRecipe(recipe: RecipeEntity) {
         viewModelScope.launch {
-            recipeRepository.insertRecipe(recipe)
+            RepositoryProvider.recipeRepository.insertRecipe(recipe)
         }
     }
 
     fun removeRecipe(recipe: RecipeEntity) {
         viewModelScope.launch {
-            recipeRepository.deleteRecipe(recipe)
+            RepositoryProvider.recipeRepository.deleteRecipe(recipe)
         }
     }
 }
