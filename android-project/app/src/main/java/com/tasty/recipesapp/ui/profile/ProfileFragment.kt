@@ -5,27 +5,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
+import com.tasty.recipesapp.R
 import com.tasty.recipesapp.adapters.NewRecipeAdapter
 import com.tasty.recipesapp.data.models.NewRecipeModel
 import com.tasty.recipesapp.database.RecipeEntity
 import com.tasty.recipesapp.providers.RepositoryProvider
+import com.tasty.recipesapp.ui.recipe.NewRecipeDetailFragment
 import kotlinx.coroutines.launch
 
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ProfileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ProfileFragment : Fragment() {
 
     private val profileViewModel: ProfileViewModel by viewModels()
@@ -45,9 +43,10 @@ class ProfileFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.setHasFixedSize(true)
 
-        recipeAdapter = NewRecipeAdapter(emptyList()) { recipe ->
-            confirmDeleteRecipe(recipe)
-        }
+        recipeAdapter = NewRecipeAdapter(emptyList(),
+            { recipe -> confirmDeleteRecipe(recipe) },
+            { recipe -> onRecipeClicked(recipe) }
+        )
         
         recyclerView.adapter = recipeAdapter
 
@@ -60,6 +59,16 @@ class ProfileFragment : Fragment() {
         }
 
         return view
+    }
+
+    private fun onRecipeClicked(recipe: NewRecipeModel) {
+        //val action = ProfileFragmentDirections.actionProfileFragmentToNewRecipeDetailFragment(recipe)
+        //findNavController().navigate(action)
+        val bundle = Bundle()
+        bundle.putLong("recipe", recipe.id)
+        val detailFragment = NewRecipeDetailFragment()
+        detailFragment.arguments = bundle
+        NavHostFragment.findNavController(this).navigate(R.id.action_profileFragment_to_newRecipeDetailFragment, bundle)
     }
 
     private fun confirmDeleteRecipe(recipe: NewRecipeModel) {

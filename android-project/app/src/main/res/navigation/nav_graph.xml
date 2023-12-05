@@ -12,7 +12,9 @@
     <fragment android:id="@+id/newRecipeFragment"
               android:name="com.tasty.recipesapp.ui.recipe.NewRecipeFragment"
               android:label="fragment_profile"
-              tools:layout="@layout/fragment_new_recipe"/>
+              tools:layout="@layout/fragment_new_recipe">
+        <action android:id="@+id/action_newRecipeFragment_to_profileFragment" app:destination="@id/profileFragment"/>
+    </fragment>
 
     <fragment android:id="@+id/profileFragment"
               android:name="com.tasty.recipesapp.ui.profile.ProfileFragment"
@@ -20,6 +22,8 @@
               tools:layout="@layout/fragment_profile">
         <action android:id="@+id/action_profileFragment_to_newRecipeFragment"
                 app:destination="@id/newRecipeFragment"/>
+        <action android:id="@+id/action_profileFragment_to_newRecipeDetailFragment"
+                app:destination="@id/newRecipeDetailFragment"/>
     </fragment>
 
     <activity android:id="@+id/splashActivity"
@@ -37,6 +41,13 @@
 
     <fragment android:id="@+id/recipeDetailFragment" android:name="com.tasty.recipesapp.ui.recipe.RecipeDetailFragment"
               android:label="fragment_recipe_detail" tools:layout="@layout/fragment_recipe_detail"/>
+
+    <fragment android:id="@+id/newRecipeDetailFragment"
+              android:name="com.tasty.recipesapp.ui.recipe.NewRecipeDetailFragment"
+              android:label="NewRecipeDetailFragment"
+              tools:layout="@layout/fragment_new_recipe_detail">
+
+    </fragment>
 
 
 </navigation>

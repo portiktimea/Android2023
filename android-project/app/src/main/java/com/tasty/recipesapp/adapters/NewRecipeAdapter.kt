@@ -18,7 +18,8 @@ import java.util.concurrent.Executors
 
 class NewRecipeAdapter(
     var recipes: List<NewRecipeModel>,
-    private val onRecipeLongClicked: (NewRecipeModel) -> Unit
+    private val onRecipeLongClicked: (NewRecipeModel) -> Unit,
+    private val onClickListener: (NewRecipeModel) -> Unit
 ) : RecyclerView.Adapter<NewRecipeAdapter.NewRecipeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewRecipeViewHolder {
@@ -35,7 +36,6 @@ class NewRecipeAdapter(
 
         val handler = Handler(Looper.getMainLooper())
 
-        var image: Bitmap? = null
         executor.execute {
 
             val imageURL = recipe.pictureUrl
@@ -59,6 +59,10 @@ class NewRecipeAdapter(
         holder.itemView.setOnLongClickListener{
             onRecipeLongClicked.invoke(recipe)
             true
+        }
+
+        holder.itemView.setOnClickListener {
+            onClickListener.invoke(recipe)
         }
     }
 

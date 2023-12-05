@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.tasty.recipesapp.database.RecipeDao
 import com.tasty.recipesapp.database.RecipeDatabase
@@ -14,7 +15,9 @@ import com.tasty.recipesapp.database.RecipeEntity
 import com.tasty.recipesapp.databinding.FragmentNewRecipeBinding
 import com.tasty.recipesapp.providers.RepositoryProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
+import com.tasty.recipesapp.R
 import com.tasty.recipesapp.data.dto.NewRecipeDTO
 import kotlinx.coroutines.launch
 import org.json.JSONArray
@@ -60,8 +63,11 @@ class NewRecipeFragment : Fragment(){
         saveRecipeButton.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch {
                 saveRecipeToDatabase(binding)
+                Toast.makeText(requireContext(), "Recipe saved", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.action_newRecipeFragment_to_profileFragment)
             }
         }
+
 
         return binding.root
     }
@@ -89,9 +95,8 @@ class NewRecipeFragment : Fragment(){
         }
 
         val recipe = createJsonFromInputs(title, description, pictureURL, videoURL, ingredients, instructions)
-        val gson = Gson()
         val recipeEntity = RecipeEntity(
-            json = gson.toJson(recipe)
+            json = recipe
         )
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -110,7 +115,6 @@ class NewRecipeFragment : Fragment(){
 
         return jsonObject.toString()
     }
-
     private fun addNewEditText(linearLayout: LinearLayout, hint: String) {
         val editText = EditText(context)
         editText.layoutParams = LinearLayout.LayoutParams(

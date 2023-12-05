@@ -33,6 +33,16 @@ class RecipesRepository(private val recipeDao: RecipeDao) : IGenericRepository<R
         }
     }
 
+    suspend fun getRecipeById(recipeId: Long): NewRecipeModel? {
+        val recipeEntity = recipeDao.getRecipeById(recipeId)
+        return recipeEntity?.let {
+            val jsonObject = JSONObject(it.json)
+            jsonObject.put("id", it.internalId)
+            val gson = Gson()
+            gson.fromJson(jsonObject.toString(), NewRecipeDTO::class.java).toModel()
+        }
+    }
+
     override fun getAll(context: Context): List<RecipeModel> {
         return readAll(context).toRecipeModelList()
     }
