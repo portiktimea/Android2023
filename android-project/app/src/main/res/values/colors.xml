@@ -5,4 +5,20 @@
     <color name="avocadogreen">#B2C248</color>
     <color name="nude">#CDB6A7</color>
     <color name="brown">#BF5C1D</color>
+    <color name="pale_silver">#C9C0BB</color>
+    <color name="gray_goose">#D1D0CE</color>
+    <color name="light_beige">#FFF0DB</color>
+    <color name="champagne">#F7E7CE</color>
+    <color name="camel_brown">#C19A6B</color>
+    <color name="tan">#D2B48C</color>
+    <color name="light_french_beige">#C8AD7F</color>
+    <color name="burly_wood">#DEB887</color>
+    <color name="dark_almond">#AB784E</color>
+    <color name="metallic_bronze">#A97142</color>
+    <color name="desert_sand">#EDC9AF</color>
+    <color name="pale_pink">#F2D4D7</color>
+    <color name="lavender_pinocchio">#EBDDE2</color>
+    <color name="dark_white">#E1D9D1</color>
+    <color name="ash_white">#E9E4D4</color>
+    <color name="white_chocolate">#EDE6D6</color>
 </resources>

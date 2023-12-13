@@ -43,7 +43,7 @@ class NewRecipeFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val binding = FragmentNewRecipeBinding.inflate(inflater, container, false)
+        binding = FragmentNewRecipeBinding.inflate(inflater, container, false)
 
         val linearLayoutIngredient = binding.linearLayout2
         val linearLayoutInstruction = binding.linearLayout3
@@ -62,9 +62,20 @@ class NewRecipeFragment : Fragment(){
         val saveRecipeButton = binding.saveRecipeButton
         saveRecipeButton.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch {
-                saveRecipeToDatabase(binding)
-                Toast.makeText(requireContext(), "Recipe saved", Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.action_newRecipeFragment_to_profileFragment)
+                val title = binding.recipeTitle.text?.toString()
+                val description = binding.recipeDescription.text?.toString()
+                val toastMessage: String = if (title.isNullOrEmpty() || description.isNullOrEmpty()) {
+                    "Please enter requirements!"
+                } else {
+                    saveRecipeToDatabase(binding)
+                    "Recipe saved successfully"
+                }
+
+                Toast.makeText(requireContext(), toastMessage, Toast.LENGTH_SHORT).show()
+
+                if (!title.isNullOrEmpty() && !description.isNullOrEmpty()) {
+                    findNavController().navigate(R.id.action_newRecipeFragment_to_profileFragment)
+                }
             }
         }
 
@@ -82,7 +93,10 @@ class NewRecipeFragment : Fragment(){
         for (i in 0 until binding.linearLayout2.childCount) {
             val editText = binding.linearLayout2.getChildAt(i) as? EditText
             editText?.let {
-                ingredients.add(it.text.toString())
+                val ingredientText = it.text.toString().trim()
+                if (ingredientText.isNotEmpty()) {
+                    ingredients.add(ingredientText)
+                }
             }
         }
 
@@ -90,7 +104,10 @@ class NewRecipeFragment : Fragment(){
         for (i in 0 until binding.linearLayout3.childCount) {
             val editText = binding.linearLayout3.getChildAt(i) as? EditText
             editText?.let {
-                instructions.add(it.text.toString())
+                val instructionText = it.text.toString().trim()
+                if(instructionText.isNotEmpty()){
+                    instructions.add(instructionText)
+                }
             }
         }
 

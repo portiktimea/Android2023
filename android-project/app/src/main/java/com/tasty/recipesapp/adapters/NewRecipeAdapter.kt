@@ -76,7 +76,7 @@ class NewRecipeAdapter(
     }
 
     class NewRecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val textView : TextView = itemView.findViewById(R.id.textView)
+        val textView : TextView = itemView.findViewById(R.id.textView6)
         val imageView : ImageView = itemView.findViewById(R.id.imageView)
     }
 

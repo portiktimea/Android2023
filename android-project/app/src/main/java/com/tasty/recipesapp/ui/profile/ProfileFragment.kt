@@ -35,7 +35,7 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val view: View = inflater.inflate(com.tasty.recipesapp.R.layout.fragment_profile, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_profile, container, false)
         val fabAddRecipe = view.findViewById<FloatingActionButton>(com.tasty.recipesapp.R.id.fabAddRecipe)
         fabAddRecipe.setOnClickListener { NavHostFragment.findNavController(this).navigate(com.tasty.recipesapp.R.id.action_profileFragment_to_newRecipeFragment) }
 
@@ -74,12 +74,12 @@ class ProfileFragment : Fragment() {
     private fun confirmDeleteRecipe(recipe: NewRecipeModel) {
         val alertDialogBuilder = AlertDialog.Builder(requireContext())
         alertDialogBuilder.apply {
-            setTitle("Recept törlése")
-            setMessage("Biztosan törölni szeretné ezt a receptet?")
-            setPositiveButton("Igen") { _, _ ->
+            setTitle("Delete recipe")
+            setMessage("Are you sure, you want to delete this recipe?")
+            setPositiveButton("Yes") { _, _ ->
                 deleteRecipe(recipe)
             }
-            setNegativeButton("Mégsem") { dialog, _ ->
+            setNegativeButton("No") { dialog, _ ->
                 dialog.dismiss()
             }
         }
@@ -92,7 +92,6 @@ class ProfileFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             profileViewModel.removeRecipe(recipeEntity)
-            profileViewModel.getAllRecipes(requireContext())
         }
     }
 

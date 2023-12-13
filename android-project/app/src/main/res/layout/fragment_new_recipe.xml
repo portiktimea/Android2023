@@ -176,6 +176,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Add"
+                android:backgroundTint="@color/nude"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -187,6 +188,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/addIngredientButton"
+                android:backgroundTint="@color/nude"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -195,10 +197,11 @@
                 app:layout_constraintVertical_bias="0.0"/>
         <Button
                 android:text="Save"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/saveRecipeButton"
                 android:layout_marginBottom="100dp"
+                android:backgroundTint="@color/nude"
                 app:layout_constraintTop_toBottomOf="@+id/addInstructionButton"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
