@@ -30,7 +30,7 @@ class RecipesFragment : Fragment() {
 
         recyclerView.adapter = recipeAdapter
 
-        recipeViewModel.loadRecipeData(requireContext())
+        recipeViewModel.getAllRecipesFromApi()
         recipeViewModel.recipeModels.observe(viewLifecycleOwner) { recipes ->
             for (recipeModel in recipes) {
                 Log.d("Recipes", recipeModel.toString())

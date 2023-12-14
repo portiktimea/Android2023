@@ -1,13 +1,16 @@
 package com.tasty.recipesapp.ui.recipe
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.tasty.recipesapp.data.models.InstructionModel
 import com.tasty.recipesapp.data.models.RecipeModel
 import com.tasty.recipesapp.data.models.TagModel
 import com.tasty.recipesapp.providers.RepositoryProvider
+import kotlinx.coroutines.launch
 
 class RecipeListViewModel : ViewModel() {
 
@@ -39,4 +42,16 @@ class RecipeListViewModel : ViewModel() {
         val data = RepositoryProvider.recipeRepository.getAll(context)
         _recipeModels.value = data
     }
+
+    fun getAllRecipesFromApi() {
+        viewModelScope.launch {
+            val recipes = RepositoryProvider.recipeRepository.getRecipes("0", "20", null)
+            Log.d("recipesApi", recipes.toString())
+//            recipes.forEach {
+//                Log.d("RECIPE_API", it.toString())
+//            }
+
+        }
+    }
+
 }
