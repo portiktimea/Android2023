@@ -12,7 +12,7 @@ data class RecipeDTO(
     val language: String?,
     val id: Int,
     val sections: List<SectionDTO>,
-    val name: String?,
+    val name: String,
     @SerializedName("video_url")
     val videoUrl: String?,
     val nutrition: NutritionDTO,

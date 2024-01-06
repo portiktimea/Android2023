@@ -2,18 +2,19 @@ package com.tasty.recipesapp.ui.recipe
 
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tasty.recipesapp.R
-import com.tasty.recipesapp.adapters.NewRecipeAdapter
 import com.tasty.recipesapp.adapters.RecipeAdapter
-import com.tasty.recipesapp.data.models.RecipeModel
 
 
 class RecipesFragment : Fragment() {
@@ -35,9 +36,29 @@ class RecipesFragment : Fragment() {
             for (recipeModel in recipes) {
                 Log.d("Recipes", recipeModel.toString())
             }
-            recipeAdapter.recipes = recipes
+            recipeAdapter.originalRecipes = recipes
+            recipeAdapter.updateList(recipes)
         }
+
+        val searchEditText: EditText = view.findViewById(R.id.searchEditText)
+        searchEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                recipeAdapter.filter(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s.isNullOrBlank()) {
+                    recipeViewModel.recipeModels.observe(viewLifecycleOwner) { recipes ->
+                        recipeAdapter.updateList(recipes)
+                    }
+                }
+            }
+        })
     }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

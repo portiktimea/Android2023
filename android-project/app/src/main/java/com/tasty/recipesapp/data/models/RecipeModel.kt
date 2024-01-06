@@ -8,7 +8,7 @@ data class RecipeModel(
     val language: String?,
     val id: Int,
     val sections: List<SectionModel>,
-    val name: String?,
+    val name: String,
     val videoUrl: String?,
     val nutrition: NutritionModel,
     val topics: List<TopicModel>,

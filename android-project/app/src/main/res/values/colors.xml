@@ -21,4 +21,5 @@
     <color name="dark_white">#E1D9D1</color>
     <color name="ash_white">#E9E4D4</color>
     <color name="white_chocolate">#EDE6D6</color>
+    <color name="black2">#80000000</color>
 </resources>
