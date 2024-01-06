@@ -6,7 +6,7 @@ data class NutritionDTO(
     val carbohydrates: Int,
     val fiber: Int,
     @SerializedName("updated_at")
-    val updatedAt: String,
+    val updatedAt: String?,
     val protein: Int,
     val fat: Int,
     val calories: Int,

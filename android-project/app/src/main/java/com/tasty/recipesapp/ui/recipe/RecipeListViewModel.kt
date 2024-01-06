@@ -37,20 +37,20 @@ class RecipeListViewModel : ViewModel() {
 //        _tagModels.value = data
 //    }
 
-    fun loadRecipeData(context: Context) {
-        RepositoryProvider.initialize(context)
-        val data = RepositoryProvider.recipeRepository.getAll(context)
-        _recipeModels.value = data
-    }
+//    fun loadRecipeData(context: Context) {
+//        RepositoryProvider.initialize(context)
+//        val data = RepositoryProvider.recipeRepository.getAll(context)
+//        _recipeModels.value = data
+//    }
 
     fun getAllRecipesFromApi() {
         viewModelScope.launch {
-            val recipes = RepositoryProvider.recipeRepository.getRecipes("0", "20", null)
+            val recipes = RepositoryProvider.recipeRepository.getRecipesFromApi("0", "20")
+            _recipeModels.value = recipes
             Log.d("recipesApi", recipes.toString())
-//            recipes.forEach {
-//                Log.d("RECIPE_API", it.toString())
-//            }
-
+            recipes.forEach {
+                Log.d("RECIPE_API", it.toString())
+            }
         }
     }
 

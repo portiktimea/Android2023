@@ -11,6 +11,7 @@ import com.tasty.recipesapp.data.models.RecipeModel
 import com.tasty.recipesapp.database.RecipeDao
 import com.tasty.recipesapp.database.RecipeEntity
 import com.tasty.recipesapp.retrofit.ApiClient
+import com.tasty.recipesapp.retrofit.RecipeApiClient
 import com.tasty.recipesapp.retrofit.RecipeResponse
 import com.tasty.recipesapp.utils.Mapping.toModel
 import com.tasty.recipesapp.utils.Mapping.toRecipeModelList
@@ -20,6 +21,7 @@ import org.json.JSONObject
 import java.io.IOException
 
 class RecipesRepository(private val recipeDao: RecipeDao) : IGenericRepository<RecipeModel> {
+
     suspend fun insertRecipe(recipe: RecipeEntity) {
         recipeDao.insertRecipe(recipe)
     }
@@ -47,29 +49,29 @@ class RecipesRepository(private val recipeDao: RecipeDao) : IGenericRepository<R
         }
     }
 
-    suspend fun getRecipes(from: String, size: String, tags: String?):
-            List<Unit>? {
-        return withContext(Dispatchers.IO) {
-            try {
-                ApiClient.apiService.getRecipes(from, size, tags)
-            } catch (e: Exception) {
-                null
-            }
-        }
-    }
-
-//    suspend fun getRecipesFromApi(
-//        from: String,
-//        size: String,
-//        tags: String? = null,
-//    ): List<RecipeModel> {
-//        try {
-//            return ApiClient.apiService.getRecipes(from, size, tags)
-//        } catch (e: Exception) {
-//            Log.d("xxx Repository","getAllRecipes Exception: ${e.message}")
+//    suspend fun getRecipes(from: String, size: String, tags: String?):
+//            List<Unit>? {
+//        return withContext(Dispatchers.IO) {
+//            try {
+//                ApiClient.apiService.getRecipes(from, size, tags)
+//            } catch (e: Exception) {
+//                null
+//            }
 //        }
-//        return listOf()
 //    }
+
+    suspend fun getRecipesFromApi(
+        from: String,
+        size: String,
+        tags: String? = null,
+    ): List<RecipeModel> {
+        try {
+            return ApiClient.apiService.getRecipes(from, size, tags).results.toRecipeModelList()
+        } catch (e: Exception) {
+            Log.d("xxx Repository","getRecipesFromApi Exception: ${e.message}")
+        }
+        return listOf()
+    }
 
     override fun getAll(context: Context): List<RecipeModel> {
         return readAll(context).toRecipeModelList()
