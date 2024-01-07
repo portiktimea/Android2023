@@ -9,7 +9,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.Spinner
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -56,6 +59,60 @@ class RecipesFragment : Fragment() {
                 }
             }
         })
+
+        val spinner: Spinner = view.findViewById(R.id.sortSpinner)
+        val adapter: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.sort_options_array,
+            android.R.layout.simple_spinner_item
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                when (position) {
+                    0 -> recipeAdapter.sortByOption("name")
+                    1 -> recipeAdapter.sortByOption("userRatings")
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
+
+        val filterSpinner: Spinner = view.findViewById(R.id.filterSpinner)
+        val filterAdapter: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.filter_options_array,
+            android.R.layout.simple_spinner_item
+        )
+        filterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        filterSpinner.adapter = filterAdapter
+
+        filterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                recipeAdapter.selectedFilterPosition = position
+                recipeAdapter.updateList(recipeViewModel.recipeModels.value.orEmpty())
+                val searchText = searchEditText.text.toString()
+                recipeAdapter.filter(searchText)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
     }
 
 

@@ -17,7 +17,9 @@ import java.net.URL
 import java.util.concurrent.Executors
 
 class RecipeAdapter(
-    var originalRecipes: List<RecipeModel>
+    var originalRecipes: List<RecipeModel>,
+
+    var selectedFilterPosition: Int = 0
 ) : RecyclerView.Adapter<RecipeAdapter.MealViewHolder>() {
 
     private var filteredRecipes: MutableList<RecipeModel> = originalRecipes.toMutableList()
@@ -70,21 +72,44 @@ class RecipeAdapter(
     fun filter(text: String) {
         filteredRecipes.clear()
         if (text.isBlank()) {
-            filteredRecipes.addAll(originalRecipes)
+            filteredRecipes.addAll(originalRecipes.filter { matchesFilter(it) })
         } else {
-            for (item in originalRecipes) {
-                if (item.name.contains(text, ignoreCase = true)) {
-                    filteredRecipes.add(item)
-                }
-            }
+            filteredRecipes.addAll(originalRecipes.filter {
+                it.name.contains(text, ignoreCase = true) && matchesFilter(it)
+            })
         }
         notifyDataSetChanged()
+    }
+
+    private fun matchesFilter(recipe: RecipeModel): Boolean {
+        return when (selectedFilterPosition) {
+            0 -> true
+            1 -> recipe.numServings == 2
+            2 -> recipe.numServings == 4
+            3 -> recipe.numServings == 6
+            else -> true
+        }
     }
 
     fun updateList(newList: List<RecipeModel>) {
         originalRecipes = newList
         filteredRecipes.clear()
-        filteredRecipes.addAll(newList)
+        filteredRecipes.addAll(newList.filter { matchesFilter(it) })
         notifyDataSetChanged()
     }
+
+    fun sortByOption(option: String) {
+        when (option) {
+            "name" -> {
+                filteredRecipes.sortBy { it.name }
+                notifyDataSetChanged()
+            }
+            "userRatings" -> {
+                filteredRecipes.sortByDescending { it.userRatings.score }
+                notifyDataSetChanged()
+            }
+        }
+    }
+
+
 }
