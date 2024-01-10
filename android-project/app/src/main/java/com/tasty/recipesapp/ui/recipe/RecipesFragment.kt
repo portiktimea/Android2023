@@ -9,16 +9,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.Spinner
+import android.widget.*
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tasty.recipesapp.R
 import com.tasty.recipesapp.adapters.RecipeAdapter
-
+import com.tasty.recipesapp.data.models.RecipeModel
+import com.tasty.recipesapp.database.RecipeEntity
+import com.tasty.recipesapp.providers.RepositoryProvider
+import kotlinx.coroutines.launch
 
 class RecipesFragment : Fragment() {
 
@@ -72,7 +73,7 @@ class RecipesFragment : Fragment() {
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
-                view: View,
+                view: View?,
                 position: Int,
                 id: Long
             ) {
@@ -99,7 +100,7 @@ class RecipesFragment : Fragment() {
         filterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
-                view: View,
+                view: View?,
                 position: Int,
                 id: Long
             ) {
@@ -113,6 +114,39 @@ class RecipesFragment : Fragment() {
 
             }
         }
+
+        recipeAdapter.setOnLikeButtonClickListener { recipe ->
+            val instructions = mutableListOf<String>()
+            for(it in recipe.instructions){
+                instructions.add(it.displayText)
+            }
+            val recipeJson = recipeAdapter.createJsonFromInputs(
+                recipe.name,
+                recipe.description,
+                recipe.thumbnailUrl,
+                recipe.videoUrl,
+                null,
+                instructions
+            )
+            val recipeEntity = RecipeEntity(json = recipeJson)
+            lifecycleScope.launch {
+                var exists = false
+                val recipes = RepositoryProvider.recipeRepository.getAllRecipes()
+                for (it in recipes){
+                    if (it.title == recipe.name && it.instructions == instructions && it.description == recipe.description && it.pictureUrl == recipe.thumbnailUrl && it.videoUrl == recipe.videoUrl){
+                        exists = true
+                    }
+                }
+                if(exists){
+                    Toast.makeText(requireContext(), "This recipe is already saved to favorites.", Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    RepositoryProvider.recipeRepository.insertRecipe(recipeEntity)
+                    Log.d("recipe saved", recipeEntity.toString())
+                }
+            }
+        }
+
     }
 
 
@@ -124,7 +158,4 @@ class RecipesFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_recipes, container, false)
     }
 
-//    override fun onItemClick(id: Int){
-//
-//    }
 }

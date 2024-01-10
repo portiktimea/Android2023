@@ -1,6 +1,5 @@
 package com.tasty.recipesapp.adapters
 
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Handler
 import android.os.Looper
@@ -24,7 +23,7 @@ class NewRecipeAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewRecipeViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.recipe_item, parent, false)
+            .inflate(R.layout.recipe_item2, parent, false)
         return NewRecipeViewHolder(view)
     }
 
@@ -76,7 +75,7 @@ class NewRecipeAdapter(
     }
 
     class NewRecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val textView : TextView = itemView.findViewById(R.id.textView6)
+        val textView : TextView = itemView.findViewById(R.id.recipeName)
         val imageView : ImageView = itemView.findViewById(R.id.imageView)
     }
 

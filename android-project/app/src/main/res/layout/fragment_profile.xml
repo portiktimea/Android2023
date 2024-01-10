@@ -5,11 +5,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+    <LinearLayout
+            android:id="@+id/userInfoLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+        <EditText
+                android:id="@+id/editTextName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name"/>
+
+        <EditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="E-mail"/>
+
+        <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Save"
+                android:id="@+id/saveButton"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/lavender_pinocchio"
+        />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/recyclerView"
             android:layout_marginBottom="100dp"
+            android:layout_marginTop="170dp"
     />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -28,6 +30,9 @@ class ProfileFragment : Fragment() {
 
     private val profileViewModel: ProfileViewModel by viewModels()
     private lateinit var recipeAdapter: NewRecipeAdapter
+    private lateinit var editTextName: EditText
+    private lateinit var editTextEmail: EditText
+    private lateinit var saveButton: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -56,6 +61,22 @@ class ProfileFragment : Fragment() {
 
         profileViewModel.allRecipes.observe(viewLifecycleOwner) { recipes ->
             recipeAdapter.updateData(recipes)
+        }
+
+        editTextName = view.findViewById(R.id.editTextName)
+        editTextEmail = view.findViewById(R.id.editTextEmail)
+        saveButton = view.findViewById(R.id.saveButton)
+
+        val preferencesManager = context?.let { it1 -> PreferencesManager.getInstance(it1) }
+        if (preferencesManager != null) {
+            editTextName.setText(preferencesManager.getUserName())
+        }
+        if (preferencesManager != null) {
+            editTextEmail.setText(preferencesManager.getUserEmail())
+        }
+
+        saveButton.setOnClickListener {
+            preferencesManager?.saveUserInfo(editTextName.text.toString(), editTextEmail.text.toString())
         }
 
         return view
